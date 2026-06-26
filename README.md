@@ -88,19 +88,19 @@ MODELS = [
 
 ```
 email-ai-slack-pipeline/
-├── lv2_gmail_n8n_slack/        # n8n + Flask
+├── 1_gmail_n8n_slack/        # n8n + Flask
 │   ├── server.py               # Flask 서버 (Gemini 호출)
 │   ├── analyze.py              # 단독 테스트용
 │   ├── .env.example
 │   └── README.md
 │
-├── lv2_langchain_slack/        # LangChain + FastAPI
+├── 2_langchain_slack/        # LangChain + FastAPI
 │   ├── main.py                 # FastAPI + LangChain Chain
 │   ├── analyze.py              # Chain 단독 테스트용
 │   ├── .env.example
 │   └── README.md
 │
-└── lv2_langgraph_slack/        # LangGraph + FastAPI
+└── 3_langgraph_slack/        # LangGraph + FastAPI
     ├── main.py                 # FastAPI + LangGraph 파이프라인
     ├── analyze.py              # LangGraph 단독 테스트용
     ├── .env.example
@@ -123,7 +123,7 @@ SLACK_WEBHOOK_URL=Slack_Incoming_Webhook_URL
 
 ```bash
 # 1. Flask 서버 실행
-cd lv2_gmail_n8n_slack
+cd 1_gmail_n8n_slack
 pip install flask python-dotenv google-generativeai
 python3 server.py
 
@@ -145,7 +145,7 @@ curl -X POST http://localhost:5678/webhook-test/email-trigger \
 ### LangChain + FastAPI
 
 ```bash
-cd lv2_langchain_slack
+cd 2_langchain_slack
 pip install langchain langchain-google-genai fastapi uvicorn python-dotenv requests
 
 # Chain 단독 테스트
@@ -163,7 +163,7 @@ curl -X POST http://localhost:3000/analyze \
 ### LangGraph + FastAPI
 
 ```bash
-cd lv2_langgraph_slack
+cd 3_langgraph_slack
 pip install langchain langchain-google-genai langgraph fastapi uvicorn python-dotenv requests
 
 # LangGraph 단독 테스트
@@ -187,20 +187,4 @@ curl -X POST http://localhost:3000/analyze \
 n8n 2.0+ 에서 보안상 기본 비활성화. Docker 실행 시 환경변수로 활성화 필요.
 단, 컨테이너 내부에 Python이 없어서 `python3`를 직접 실행할 수 없음 → Flask 서버 방식으로 전환.
 
-**n8n Webhook 데이터 중첩 구조**
-
-```json
-// 실제 수신 구조 (한 단계 중첩)
-{ "body": { "subject": "...", "body": "..." } }
-
-// 올바른 접근
-$json.body.subject  // ✅
-$json.subject       // ❌
-```
-
-**Docker 내부 → 로컬 서버 접근**
-
-```
-http://localhost:3000                 ❌  (컨테이너 안에서는 안 됨)
-http://host.docker.internal:3000     ✅
 ```
