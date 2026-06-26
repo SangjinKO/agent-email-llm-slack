@@ -90,21 +90,13 @@ MODELS = [
 email-ai-slack-pipeline/
 ├── 1_gmail_n8n_slack/        # n8n + Flask
 │   ├── server.py               # Flask 서버 (Gemini 호출)
-│   ├── analyze.py              # 단독 테스트용
-│   ├── .env.example
-│   └── README.md
+│   └── My workflow.json      # n8n workflow
 │
 ├── 2_langchain_slack/        # LangChain + FastAPI
 │   ├── main.py                 # FastAPI + LangChain Chain
-│   ├── analyze.py              # Chain 단독 테스트용
-│   ├── .env.example
-│   └── README.md
 │
 └── 3_langgraph_slack/        # LangGraph + FastAPI
     ├── main.py                 # FastAPI + LangGraph 파이프라인
-    ├── analyze.py              # LangGraph 단독 테스트용
-    ├── .env.example
-    └── README.md
 ```
 
 ---
