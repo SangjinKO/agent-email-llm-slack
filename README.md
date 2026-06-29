@@ -179,4 +179,6 @@ curl -X POST http://localhost:3000/analyze \
 n8n 2.0+ 에서 보안상 기본 비활성화. Docker 실행 시 환경변수로 활성화 필요.
 단, 컨테이너 내부에 Python이 없어서 `python3`를 직접 실행할 수 없음 → Flask 서버 방식으로 전환.
 
-```
+<img width="707" height="179" alt="n8n_email-gemini-slack" src="https://github.com/user-attachments/assets/71e35d84-5011-43a0-9b0c-170d2d6e51f4" />
+
+
