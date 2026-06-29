@@ -1,0 +1,102 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "email-trigger",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -240,
+        -144
+      ],
+      "id": "e888f4f4-545d-4cd3-b2ef-83b7c7c9a74e",
+      "name": "Email Webhook Trigger",
+      "webhookId": "029f27c9-ae63-46ab-a04f-a3a668fd351a"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3000/analyze",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"subject\": \"{{ $json.body.subject }}\", \"body\": \"{{ $json.body.body }}\"}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -32,
+        -160
+      ],
+      "id": "161ec0d9-2e05-4cb2-88bd-d3bf9dd8a594",
+      "name": "Gemini Flask Server"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.SLACK_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"text\": \"{{ $json.slack_message }}\"}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        176,
+        -128
+      ],
+      "id": "0466f21d-e80b-4acd-b455-de8558b643ac",
+      "name": "Slack Sender"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gemini Flask Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Flask Server": {
+      "main": [
+        [
+          {
+            "node": "Slack Sender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack Sender": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "59e0473e-a92d-440d-ba2f-e8de040a2226",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5b6035351801d3642da813f76e56d313a2d9e300b9e05bdafb509aefce6ccbc9"
+  },
+  "nodeGroups": [],
+  "id": "STMqGHtLDZFqilxW",
+  "tags": []
+}
