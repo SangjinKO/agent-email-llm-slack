@@ -181,7 +181,6 @@ n8n 2.0+ 에서 보안상 기본 비활성화. Docker 실행 시 환경변수로
 
 ```
 
----
 
 <img width="864" height="215" alt="n8n_agentic-loop-search" src="https://github.com/user-attachments/assets/f89151d9-8419-42ce-aaa4-b531099a5c07" />
 
